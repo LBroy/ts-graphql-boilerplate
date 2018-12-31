@@ -1,22 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToOne,
+  JoinColumn
+  // OneToMany
+} from "typeorm";
+import { Profile } from "./Profile";
 
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "text", unique: true })
-  email: string;
-
-  @Column({ type: "boolean", default: false })
-  confirmed: boolean;
-
   @Column("text")
   firstName: string;
 
-  @Column("text")
-  lastName: string;
+  @Column({ nullable: true })
+  profileId: number;
 
-  @Column()
-  age: number;
+  // @OneToMany(() => Photo, photo => photo.user)
+  // photos: Photo[];
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
 }
